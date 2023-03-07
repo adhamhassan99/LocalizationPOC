@@ -3,5 +3,8 @@
     "test":"Test",
     "StepOne":"Step One",
     "section1":"Edit App.tsx to change this screen and then come back to see your edits.",
-    
+    "see-your-changes":"See Your Changes",
+    "reload-inst":"double tap R to reload",
+    "toggle-Language":"toggle Language"
+
 }

@@ -2,5 +2,8 @@
     "hello":"اهلا",
     "test":"اختبار",
     "StepOne":"الخطوه الاولي",
-    "section1":"تعديل الجزء الاول"
+    "section1":"تعديل الجزء الاول",
+    "see-your-changes":"تفقد تعديلاتك",
+    "reload-inst":"اضغط R مرتين ",
+    "toggle-Language":"تغير اللغه"
 }

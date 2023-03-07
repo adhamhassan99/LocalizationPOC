@@ -10,11 +10,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "i18next": "^22.4.10",
     "react": "18.2.0",
     "react-i18next": "^12.2.0",
     "react-native": "0.71.3",
-    "react-native-restart": "^0.0.27"
+    "react-native-restart": "^0.0.27",
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

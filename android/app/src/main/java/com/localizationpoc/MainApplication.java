@@ -24,8 +24,10 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
-          return packages;
+          // packages.add(new MyReactNativePackage())
+             packages.add(new MyAppPackage());
+
+            return packages;
         }
 
         @Override
@@ -53,6 +55,9 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    //  I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
+    //     sharedI18nUtilInstance.forceRTL(this,false);
+    //     sharedI18nUtilInstance.allowRTL(this, false);
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       DefaultNewArchitectureEntryPoint.load();

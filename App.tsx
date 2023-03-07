@@ -19,18 +19,21 @@ import {
   Text,
   useColorScheme,
   View,
+  NativeModules,
 } from 'react-native';
 
 import {
   Colors,
   DebugInstructions,
   Header,
-  LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import i18n from './src/locales';
 import i18next, {t} from 'i18next';
-
+import MainContent from './src/components/MainContent';
+// import {useSelector, useDispatch} from 'react-redux';
+// import {toggleDirection} from './src/store/languageSlice';
+import Providers from './src/components/Providers';
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -63,10 +66,12 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  // const direction = useSelector(state => state.language.direction);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+  const {LanguageDirectionModule} = NativeModules;
 
   const toggleLang = () => {
     if (i18n.language == 'en') {
@@ -80,41 +85,14 @@ function App(): JSX.Element {
       I18nManager.allowRTL(false);
       I18nManager.forceRTL(false);
     }
-    RNRestart.Restart();
+    // RNRestart.Restart();
+    LanguageDirectionModule.toggleLanguageDirection('ltr');
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text style={{fontSize: 20, fontWeight: '700', alignSelf: 'center'}}>
-            {i18next.language}
-          </Text>
-
-          <Section title={t('StepOne')}>{t('section1')}</Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <Button title="toggle Language" onPress={toggleLang} />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Providers>
+      <MainContent />
+    </Providers>
   );
 }
 
@@ -136,5 +114,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
+// const pApp = (
+//   <Provider store={store}>
+//     <App />
+//   </Provider>
+// );
 
 export default App;
