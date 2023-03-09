@@ -22,18 +22,18 @@ import {
   NativeModules,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import i18n from './src/locales';
 import i18next, {t} from 'i18next';
 import MainContent from './src/components/MainContent';
 // import {useSelector, useDispatch} from 'react-redux';
 // import {toggleDirection} from './src/store/languageSlice';
 import Providers from './src/components/Providers';
+import {ThemeProvider} from '@shopify/restyle';
+import dark from './src/themes/dark';
+import neonTheme from './src/themes/neon';
+import {Provider} from 'react-redux';
+import {store} from './src/store/store';
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -91,7 +91,9 @@ function App(): JSX.Element {
 
   return (
     <Providers>
+      {/* <ThemeProvider theme={neonTheme}> */}
       <MainContent />
+      {/* </ThemeProvider> */}
     </Providers>
   );
 }

@@ -21,7 +21,13 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {useSelector, useDispatch} from 'react-redux';
 import {toggleDirection} from '../store/languageSlice';
+import {changeTheme} from '../store/themeSlice';
 import i18n from '../locales';
+import dark, {Theme} from '../themes/dark';
+import {ThemeProvider, useTheme} from '@shopify/restyle';
+import lightTheme from '../themes/light';
+import neonTheme from '../themes/neon';
+import Content from './Content';
 
 type Props = {};
 
@@ -53,6 +59,8 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 const MainContent = (props: Props) => {
   const isDarkMode = useColorScheme() === 'dark';
+  const themeShopify = useTheme<Theme>();
+  const {cardPrimaryBackground} = themeShopify.colors;
   // const direction = useSelector(state => state.language.direction);
   const dispatch = useDispatch();
   const backgroundStyle = {
@@ -60,6 +68,7 @@ const MainContent = (props: Props) => {
   };
   const {LanguageDirectionModule} = NativeModules;
   const direction = useSelector(state => state.language.direction);
+  const theme = useSelector(state => state.theme.theme);
 
   const toggleLang = () => {
     if (i18n.language == 'en') {
@@ -79,64 +88,13 @@ const MainContent = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-
-      <Header />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          direction: direction,
-        }}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: '700',
-            alignSelf: 'center',
-            writingDirection: direction,
-            textAlign: direction === 'ltr' ? 'left' : 'right',
-          }}>
-          {i18next.language}
-        </Text>
-
-        <Text style={{fontSize: 20, fontWeight: '700', alignSelf: 'center'}}>
-          {direction}
-        </Text>
-
-        <Section title={t('StepOne')}>{t('section1')}</Section>
-        <Section title={t('see-your-changes')}>
-          <Text>{t('reload-inst')}</Text>
-        </Section>
-        <Section title={t('StepOne')}>{t('section1')}</Section>
-        <Section title={t('see-your-changes')}>
-          <Text>{t('reload-inst')}</Text>
-        </Section>
-        <Button title={t('toggle-Language')} onPress={() => toggleLang()} />
-      </View>
-    </SafeAreaView>
+    <ThemeProvider
+      theme={
+        theme === 'dark' ? dark : theme === 'light' ? lightTheme : neonTheme
+      }>
+      <Content />
+    </ThemeProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default MainContent;
